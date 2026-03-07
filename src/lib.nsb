@@ -1,0 +1,9 @@
+{include:./lib2.nsb}
+{include:./lib3.nsb}
+{set:a()|{ignore:
+   
+    {set:a.pi|{eval:{get:b()}}{get:retx}}
+    {set:a.e|{eval:{get:c()}}{get:retx}}
+    {set:retx|{"pi": {get:a.pi}, "e": {get:a.e}}}
+    {delete:a.pi}
+}}
