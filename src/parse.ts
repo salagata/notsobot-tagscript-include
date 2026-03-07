@@ -1,7 +1,6 @@
 import * as path from "path";
 import * as fs from "fs/promises";
 
-
 export function getCodeLanguage(value?: string): null {
   return null;
 }
@@ -109,6 +108,7 @@ export function getCodeLanguage(value?: string): null {
 
 interface TagResult {
     text: string,
+    currentPath: string
 }
 
 export const TagSymbols = Object.freeze({
@@ -714,14 +714,22 @@ export const ScriptTags = Object.freeze({
     // return true;
     // },
     
-    [TagFunctions.INCLUDE]: async (arg: string, tag: any, modulePath: any): Promise<boolean> => {
+    [TagFunctions.INCLUDE]: async (arg: string, tag: any): Promise<boolean> => {
     // {include:/path/to/route}
       const pathToModule: string = arg;
-      
-      const includedCode = await fs.readFile(pathToModule, "utf-8");
+      const oldPath: string = tag.currentPath;
+      let includedCode: string;
+      if(path.isAbsolute(pathToModule)) {
+        tag.currentPath = pathToModule;
+      } else {
+        tag.currentPath = path.join(tag.currentPath,pathToModule)
+      }
 
-      const argParsed = (await parse(includedCode, modulePath)).text;
+      includedCode = await fs.readFile(tag.currentPath,"utf-8");
+      
+      const argParsed = (await parse(includedCode)).text;
       tag.text += argParsed;
+      tag.currentPath = oldPath;
       // normalizeTagResults(tag, argParsed);
       return true;
     }
@@ -818,11 +826,11 @@ function parseInnerScript(value: string, shouldTrim: boolean = true): [string, s
   return [scriptName.toLowerCase(), arg];
 }
 
-export async function parse(value: string, currentPath: any, shouldTrim: boolean = true) : Promise<TagResult> {
+export async function parse(value: string, shouldTrim: boolean = true) : Promise<TagResult> {
 
   let isFirstParse = true;
   
-  const tag = { text: "" };
+  const tag = { text: "", currentPath: "" };
   
   let depth = 0;
   let scriptBuffer = '';
@@ -864,12 +872,12 @@ export async function parse(value: string, currentPath: any, shouldTrim: boolean
             if (TagFunctionsToString.NOTE.includes(scriptName)) {
               // ignore
             } else if (TagFunctionsToString.INCLUDE.includes(scriptName)) {
-              const wasValid = await ScriptTags[TagFunctions.INCLUDE](arg, tag, currentPath);
+              const wasValid = await ScriptTags[TagFunctions.INCLUDE](arg, tag);
               if (!wasValid) {
                 tag.text += scriptBuffer;
               }
             } else {
-              await parse(arg,currentPath)
+              await parse(arg)
               tag.text += scriptBuffer;
             }
 
@@ -882,6 +890,6 @@ export async function parse(value: string, currentPath: any, shouldTrim: boolean
   tag.text = (tag.text + scriptBuffer);
   return tag;
 }
-parse("{include:./lib.nsb} more",{}).then(p => {
+parse("{include:./main.nsb}").then(p => {
   console.log(JSON.stringify(p));
 })

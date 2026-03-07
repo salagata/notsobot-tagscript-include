@@ -1,0 +1,6 @@
+{include:./lib.nsb}
+{include:./lib/util/render.nsb}
+
+{eval:{get:a()}}
+{set:render(obj)|{get:retx}}
+{eval:{get:render()}}

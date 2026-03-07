@@ -1,0 +1,6 @@
+{set:render()|{ignore:
+    {foreach:{get:render(obj)}|
+        {markupcodestring:{get:idx}}: {get:valuex}
+    }
+    {delete:render(obj)}
+}}
