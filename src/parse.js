@@ -602,9 +602,9 @@ exports.ScriptTags = Object.freeze((_b = {},
     // return true;
     // },
     _b[TagFunctions.INCLUDE] = function (arg, tag) { return __awaiter(void 0, void 0, void 0, function () {
-        var pathToModule, oldPath, includedCode, argParsed;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var pathToModule, oldPath, includedCode, _a, argParsed;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
                     pathToModule = arg;
                     oldPath = tag.currentPath;
@@ -614,12 +614,19 @@ exports.ScriptTags = Object.freeze((_b = {},
                     else {
                         tag.currentPath = path.join(tag.currentPath, pathToModule);
                     }
-                    return [4 /*yield*/, fs.readFile(tag.currentPath, "utf-8")];
+                    _b.label = 1;
                 case 1:
-                    includedCode = _a.sent();
-                    return [4 /*yield*/, parse(includedCode)];
+                    _b.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, fs.readFile(tag.currentPath, "utf-8")];
                 case 2:
-                    argParsed = (_a.sent()).text;
+                    includedCode = _b.sent();
+                    return [3 /*break*/, 4];
+                case 3:
+                    _a = _b.sent();
+                    throw new Error("ENOENT: no such file or directory to the module " + tag.currentPath);
+                case 4: return [4 /*yield*/, parse(includedCode)];
+                case 5:
+                    argParsed = (_b.sent()).text;
                     tag.text += argParsed;
                     tag.currentPath = oldPath;
                     // normalizeTagResults(tag, argParsed);
@@ -816,5 +823,5 @@ function parse(value_1) {
     });
 }
 parse("{include:./main.nsb}").then(function (p) {
-    console.log(p.text);
+    console.log(JSON.stringify(p));
 });

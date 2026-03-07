@@ -1,5 +1,6 @@
 {include:./lib/lib2.nsb}
 {include:./lib/lib3.nsb}
+{include:./lol/lib3.nsb}
 {set:a()|{ignore:
    
     {set:a.pi|{eval:{get:b()}}{get:retx}}

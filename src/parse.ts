@@ -725,7 +725,11 @@ export const ScriptTags = Object.freeze({
         tag.currentPath = path.join(tag.currentPath,pathToModule)
       }
 
-      includedCode = await fs.readFile(tag.currentPath,"utf-8");
+      try {
+        includedCode = await fs.readFile(tag.currentPath,"utf-8");
+      } catch {
+        throw new Error("ENOENT: no such file or directory to the module " + tag.currentPath)
+      }
       
       const argParsed = (await parse(includedCode)).text;
       tag.text += argParsed;
