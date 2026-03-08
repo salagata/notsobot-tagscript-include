@@ -1,0 +1,24 @@
+{set:b()|{ignore:
+    {set:retx|{pi}}
+}}
+{set:c()|{ignore:
+    {set:retx|{e}}
+}}
+{set:a()|{ignore:
+   
+    {set:a.pi|{eval:{get:b()}}{get:retx}}
+    {set:a.e|{eval:{get:c()}}{get:retx}}
+    {set:retx|{"pi": {get:a.pi}, "e": {get:a.e}}}
+    {delete:a.pi}
+}}
+
+{set:render()|{ignore:
+    {foreach:{get:render(obj)}|
+        {markupcodestring:{get:idx}}: {get:valuex}
+    }
+    {delete:render(obj)}
+}}
+
+{eval:{get:a()}}
+{set:render(obj)|{get:retx}}
+{eval:{get:render()}}
