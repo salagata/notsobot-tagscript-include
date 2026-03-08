@@ -822,6 +822,3 @@ function parse(value_1) {
         });
     });
 }
-parse("{include:./main.nsb}").then(function (p) {
-    console.log(JSON.stringify(p));
-});

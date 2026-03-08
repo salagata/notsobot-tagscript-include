@@ -894,6 +894,3 @@ export async function parse(value: string, shouldTrim: boolean = true) : Promise
   tag.text = (tag.text + scriptBuffer);
   return tag;
 }
-parse("{include:./main.nsb}").then(p => {
-  console.log(JSON.stringify(p));
-})
