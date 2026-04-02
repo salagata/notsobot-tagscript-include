@@ -1,6 +1,14 @@
-# NotSoBot-TagScript-Include
+⚠️ **THIS REPOSITORY IS DEPRECATED** ⚠️
 
-Add the {include} command in TagScript to handle big projects, and have the project through multiple files.
+**Please migrate to the new repository:** [NotSoBot-TagScript-PreProcessor-Utils](https://github.com/salagata/notsobot-tagscript-preprocessor-utils)
+
+See [DEPRECATED.md](DEPRECATED.md) for migration instructions.
+
+---
+
+# NotSoBot-TagScript-PreProcessor-Utils
+
+Add many pre-processor instructions in TagScript to handle big projects, and have the project through multiple files.
 {include} works as #include in C, but with single files instead of header files, replacing the content of a file, this compiler will scan the code for {include}
 commands, and clone the code into a big file.
 

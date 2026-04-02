@@ -874,7 +874,9 @@ export async function parse(value: string, shouldTrim: boolean = true) : Promise
           if (depth <= 0) {
             let [scriptName, arg] = parseInnerScript(scriptBuffer, shouldTrim);
             if (TagFunctionsToString.NOTE.includes(scriptName)) {
-              // ignore
+              tag.text += scriptBuffer;
+            } else if (TagFunctionsToString.IGNORE.includes(scriptName)) {
+              tag.text += scriptBuffer;
             } else if (TagFunctionsToString.INCLUDE.includes(scriptName)) {
               const wasValid = await ScriptTags[TagFunctions.INCLUDE](arg, tag);
               if (!wasValid) {

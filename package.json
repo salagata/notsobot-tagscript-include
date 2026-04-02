@@ -1,7 +1,8 @@
 {
   "name": "notsobot-tagscript-include",
-  "version": "1.0.0",
-  "description": "Add the {include} command in NotSoBot TagScript as a cheap-import feature, like #include in C",
+  "version": "2.0.1",
+  "deprecated": "This package has been renamed to 'notsobot-tagscript-preprocessor-utils'. Please migrate: https://github.com/salagata/notsobot-tagscript-preprocessor-utils",
+  "description": "⚠️ DEPRECATED - Add the {include} command in NotSoBot TagScript as a cheap-import feature, like #include in C",
   "main": "parse.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
